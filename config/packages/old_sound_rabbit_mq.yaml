@@ -40,4 +40,15 @@ old_sound_rabbit_mq:
                 name: 'logger'
                 routing_keys:
                     - 'log.#'
-            callback: App\Consumer\DefaultConsumerCallback
+            callback: App\Consumer\LoggerConsumerCallback
+        NewEntries:
+            connection: default
+            exchange_options:
+                name: 'message_bus'
+                type: topic
+                arguments: { 'alternate-exchange': [ 'S', 'message_bus_dead_letter' ] }
+            queue_options:
+                name: 'NewEntries'
+                routing_keys:
+                    - 'event.*.created'
+            callback: App\Consumer\NewEntriesNotifierConsumerCallback

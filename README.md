@@ -45,12 +45,27 @@ docker-compose build
 # Example how application works
 
 ```bash
+Example #1
 student@hillel-php-advanced-2021[docker][/app]: bin/console hillel:task:publish 'Hello, RabbitMQ World!' -vvv
 2021-10-16 15:27:02 INFO      [app] Publishing message ...  ["message_body_raw" => "Hello, RabbitMQ World!"]
 2021-10-16 15:27:02 INFO      [app] Message was published  ["message_body_raw" => "Hello, RabbitMQ World!"]
 
 student@hillel-php-advanced-2021[docker][/app]: bin/console rabbitmq:consumer task -vvv
 2021-10-16 15:27:06 INFO      [app] Received message  ["message_body_raw" => "Hello, RabbitMQ World!"]
+
+Example #2
+student@hillel-php-advanced-2021[docker][/app]: bin/console hillel:message-bus:populate -vvv
+2021-10-28 21:00:31 INFO      [app] Publishing messages ...
+2021-10-28 21:00:31 INFO      [app] Messages were published
+
+student@hillel-php-advanced-2021[docker][/app]: bin/console rabbitmq:consumer logger -vvv
+2021-10-28 21:03:29 DEBUG     [app] Received message  ["message_body_raw" => "{"message":"New product was added","context":{"product_id":622}}","routing
+_key" => "log.debug"]
+2021-10-28 21:03:29 INFO      [app] Received message  ["message_body_raw" => "{"message":"Product was updated","context":{"product_id":771}}","routing_k
+ey" => "log.info"]
+2021-10-28 21:03:29 ERROR     [app] Received message  ["message_body_raw" => "{"message":"Can not delete brand","context":{"brand_id":584}}","routing_ke
+y" => "log.error"]
+
 ```
 
 # Tips
